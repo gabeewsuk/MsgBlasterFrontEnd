@@ -24,6 +24,45 @@ const App = () => {
 
     getTasks()
   }, [])
+  //Send Tasks to msgblaster on Heroku
+  const sendTasks = async () => {
+    
+    const res1 = await fetch('http://localhost:5000/tasks')
+    const data1 = await res1.json()
+    console.log(data1)
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'}, 
+      body: JSON.stringify(data1)
+  };
+
+  
+  fetch('https://msgblaster.herokuapp.com/', requestOptions)
+      .then(response => response.json())
+      .then(data => this.setState(data1));
+
+
+
+/*
+    try{
+    const res = await fetch('https://msgblaster.herokuapp.com/', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(data1),
+    })
+
+    const data = await res.json()
+    console.log(data)
+  }
+  catch(err) {
+    throw err;
+    console.log(err);
+  }
+    //setTasks([...tasks, data])
+*/
+    }
 
   // Fetch Tasks
   const fetchTasks = async () => {
@@ -53,6 +92,7 @@ const App = () => {
     const data = await res.json()
     alert("Message Has Been Qued")
     setMessage([data])
+    sendTasks();
   }
   //Delete Message
   const deleteMessage = async () => {
