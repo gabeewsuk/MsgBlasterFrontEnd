@@ -1,12 +1,6 @@
 {
   "tasks": [
     {
-      "text": "cjtooicy",
-      "day": "",
-      "reminder": false,
-      "id": 1
-    },
-    {
       "text": "hannahraisor.48",
       "day": "",
       "reminder": false,
@@ -19,12 +13,5 @@
       "id": 3
     }
   ],
-  "Message": [
-    {
-      "message": "jimim",
-      "timeHours": "",
-      "timeMinutes": "",
-      "id": 1
-    }
-  ]
+  "Message": []
 }

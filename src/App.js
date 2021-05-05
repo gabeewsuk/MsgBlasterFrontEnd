@@ -12,9 +12,7 @@ const App = () => {
   const [showAddTask, setShowAddTask] = useState(false)
   const [tasks, setTasks] = useState([
   ])
-  const [message, setMessage] = useState([
-
-  ])
+  const [message, setMessage] = useState('')
 
   useEffect(() => {
     const getTasks = async () => {
@@ -25,6 +23,10 @@ const App = () => {
     getTasks()
   }, [])
   //Send Tasks to msgblaster on Heroku
+
+  //need to add the onSubmit funciton to add the
+
+  //process.env.REACT_APP_SERVER_URL
   const sendTasks = async () => {
     
     const res1 = await fetch('http://localhost:5000/tasks')
@@ -81,6 +83,9 @@ const App = () => {
   }
   //Add Message
   const sendMessage = async (messageDetails) => {
+    console.log(messageDetails);
+    setMessage(messageDetails);
+    /*
     deleteMessage();
     const res = await fetch('http://localhost:5000/Message', {
       method: 'POST',
@@ -93,6 +98,7 @@ const App = () => {
     alert("Message Has Been Qued")
     setMessage([data])
     sendTasks();
+    */
   }
   //Delete Message
   const deleteMessage = async () => {
@@ -106,6 +112,7 @@ const App = () => {
   }
   // Add Task
   const addTask = async (task) => {
+    console.log(task);
     const res = await fetch('http://localhost:5000/tasks', {
       method: 'POST',
       headers: {
@@ -186,7 +193,8 @@ const App = () => {
         <Footer />
       </div>
       <div className = 'container' style={{float:"right", marginRight:"15%"}}>
-        <Message onSend = {sendMessage}/>
+        <Message onSend = {sendMessage} message = {message} />
+        {/*<Message onSend = {sendMessage} message = {message} sendMessageReal = {onSubmit}/>*/}
         </div>
     </Router>
   )

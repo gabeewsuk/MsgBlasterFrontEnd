@@ -1,15 +1,18 @@
 import PropTypes from 'prop-types'
 import Button from './Button'
 import { useState } from 'react'
-
-const Message = ({ onSend }) => {
+//const Message = ({ props }) => {
+const Message = ( props ) => {
 
   
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState([''])
   const [ready, setReady]= useState(false)
   const [timeHours, setHours]= useState('')
   const [timeMinutes, setMinutes] = useState('')
-
+  const onType = (e) => {
+    //setMessage(e);
+    props.onSend(e);
+  }
   const onSubmit = (e) => {
     e.preventDefault()
 
@@ -18,7 +21,7 @@ const Message = ({ onSend }) => {
       return
     }
 
-    onSend({ message, timeHours, timeMinutes })
+    //onSend({ message, timeHours, timeMinutes })
 
     setMessage('')
   }
@@ -33,8 +36,10 @@ const Message = ({ onSend }) => {
         cols={30}
           type='text'
           placeholder='Add Message'
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
+          value={props.message}
+          onChange={(e) => onType(e.target.value)}
+
+          //onChange={(e) => setMessage(e.target.value)}
         />
       </div>
       <div className='form-control'>
