@@ -13,6 +13,7 @@ const App = () => {
   const [tasks, setTasks] = useState([
   ])
   const [message, setMessage] = useState('')
+  //const [uNames, setUnames] = useState([])
 
   useEffect(() => {
     const getTasks = async () => {
@@ -27,6 +28,42 @@ const App = () => {
   //need to add the onSubmit funciton to add the
 
   //process.env.REACT_APP_SERVER_URL
+  const onSubmit = async (e) => {
+    e.preventDefault()
+    var userNames = []
+    Object.keys(tasks).map(key => (
+      userNames.push(
+      tasks[key].text)))
+    const dataSent ={
+      userNames:userNames,
+      message: message
+    }
+    const requestOptions = {
+      method: 'POST',
+      //mode:'cors',
+      headers: { 'Content-Type': 'application/json;charset=utf-8',Accept: 'application/json;',},
+      body: JSON.stringify(dataSent)
+  };
+    
+    //alert(JSON.stringify(dataSent))
+    await fetch('https://352b7cc1d0ce.ngrok.io/api/items', requestOptions)
+        .then(response => response.json()).then(console.log("it works")).catch(err => console.log())
+       
+    /*
+    const res = await fetch('https://msgblasteapi.herokuapp.com/api/items', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(dataSent),
+    })
+    */
+   
+
+     
+    
+  }
+  /*
   const sendTasks = async () => {
     
     const res1 = await fetch('http://localhost:5000/tasks')
@@ -39,7 +76,7 @@ const App = () => {
   };
 
   
-  fetch('https://msgblaster.herokuapp.com/', requestOptions)
+  fetch('https://msgblaster.herokuapp.com/api/items', requestOptions)
       .then(response => response.json())
       .then(data => this.setState(data1));
 
@@ -63,9 +100,9 @@ const App = () => {
     console.log(err);
   }
     //setTasks([...tasks, data])
-*/
-    }
 
+    }
+*/
   // Fetch Tasks
   const fetchTasks = async () => {
     const res = await fetch('http://localhost:5000/tasks')
@@ -101,6 +138,7 @@ const App = () => {
     */
   }
   //Delete Message
+  /*
   const deleteMessage = async () => {
     const res = await fetch(`http://localhost:5000/Message/1`, {
       method: 'DELETE',
@@ -110,6 +148,7 @@ const App = () => {
       ? console.log('')
       : alert('Error Deleting This Task')
   }
+  */
   // Add Task
   const addTask = async (task) => {
     console.log(task);
@@ -122,7 +161,6 @@ const App = () => {
     })
 
     const data = await res.json()
-
     setTasks([...tasks, data])
 
     // const id = Math.floor(Math.random() * 10000) + 1
@@ -193,8 +231,8 @@ const App = () => {
         <Footer />
       </div>
       <div className = 'container' style={{float:"right", marginRight:"15%"}}>
-        <Message onSend = {sendMessage} message = {message} />
-        {/*<Message onSend = {sendMessage} message = {message} sendMessageReal = {onSubmit}/>*/}
+        {/*<Message onSend = {sendMessage} message = {message} />*/}
+        <Message onSend = {sendMessage} message = {message} sendMessageReal = {onSubmit}/>
         </div>
     </Router>
   )

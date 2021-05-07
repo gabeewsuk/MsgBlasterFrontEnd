@@ -29,7 +29,7 @@ const Message = ( props ) => {
      <div>
         
       
-    <form className='add-form' onSubmit={onSubmit}>
+    <form className='add-form' onSubmit={props.sendMessageReal}>
       <div className='form-control'>
         <label>Message To Send</label>
         <textarea rows={10}
