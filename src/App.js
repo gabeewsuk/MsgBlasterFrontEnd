@@ -46,7 +46,7 @@ const App = () => {
   };
     
     //alert(JSON.stringify(dataSent))
-    await fetch('https://352b7cc1d0ce.ngrok.io/api/items', requestOptions)
+    await fetch('https://a442e74d29f3.ngrok.io/api/items', requestOptions)
         .then(response => response.json()).then(console.log("it works")).catch(err => console.log())
        
     /*
