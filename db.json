@@ -1,20 +1,12 @@
 {
   "tasks": [
     {
-      "text": "Gabe",
+      "text": "no way",
       "id": 1
     },
     {
-      "text": "Gibson",
+      "text": "is this really going to work?",
       "id": 2
-    },
-    {
-      "text": "Jose",
-      "id": 3
-    },
-    {
-      "text": "Thomas",
-      "id": 4
     }
   ],
   "Message": []
