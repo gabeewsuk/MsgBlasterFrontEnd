@@ -1,21 +1,25 @@
 import { useState } from 'react'
 
-const AddTask = ({ onAdd }) => {
+const AddTask = ({ onAdd, tasks}) => {
   const [text, setText] = useState('')
+  const [ID, setId] = useState(Number)
   //const [day, setDay] = useState('')
   //const [reminder, setReminder] = useState(false)
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault()
 
     if (!text) {
       alert('Please add a task')
       return
     }
+    console.log(tasks.length)
+    const ID = tasks.length + 1
 
-    onAdd({ text })
+    onAdd({ text, ID })
 
     setText('')
+    
     //setDay('')
     //setReminder(false)
   }

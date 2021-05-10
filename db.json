@@ -1,12 +1,8 @@
 {
   "tasks": [
     {
-      "text": "no way",
+      "text": "new",
       "id": 1
-    },
-    {
-      "text": "is this really going to work?",
-      "id": 2
     }
   ],
   "Message": []

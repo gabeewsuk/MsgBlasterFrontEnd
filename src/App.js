@@ -11,7 +11,9 @@ const App = () => {
   
   const [showAddTask, setShowAddTask] = useState(false)
   const [tasks, setTasks] = useState([
-  ])
+  ], function () {
+    console.log(JSON.stringify(tasks))
+})
   const [message, setMessage] = useState('')
   //const [uNames, setUnames] = useState([])
 
@@ -46,7 +48,7 @@ const App = () => {
   };
     
     //alert(JSON.stringify(dataSent))
-    await fetch('https://msgblasteapi.herokuapp.com/api/items', requestOptions)
+    await fetch(process.env.REACT_APP_SERVER_URL+'/api/items', requestOptions)
         .then(response => response.json()).then(console.log("it works")).catch(err => console.log())
        
     /*
@@ -66,7 +68,7 @@ const App = () => {
   /*
   const sendTasks = async () => {
     
-    const res1 = await fetch('http://localhost:5000/tasks')
+    const res1 = await fetch(process.env.REACT_APP_SERVER_URL+'/api/tasks')
     const data1 = await res1.json()
     console.log(data1)
     const requestOptions = {
@@ -105,15 +107,15 @@ const App = () => {
 */
   // Fetch Tasks
   const fetchTasks = async () => {
-    const res = await fetch('http://localhost:5000/tasks')
+    const res = await fetch(process.env.REACT_APP_SERVER_URL+'/api/tasks')
     const data = await res.json()
-
+    console.log(data)
     return data
   }
 
   // Fetch Task
-  const fetchTask = async (id) => {
-    const res = await fetch(`http://localhost:5000/tasks/${id}`)
+  const fetchTask = async (ID) => {
+    const res = await fetch(`process.env.REACT_APP_SERVER_URL/api/tasks/${ID}`)
     const data = await res.json()
 
     return data
@@ -124,7 +126,7 @@ const App = () => {
     setMessage(messageDetails);
     /*
     deleteMessage();
-    const res = await fetch('http://localhost:5000/Message', {
+    const res = await fetch('process.env.REACT_APP_SERVER_URL/api/Message', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -140,7 +142,7 @@ const App = () => {
   //Delete Message
   /*
   const deleteMessage = async () => {
-    const res = await fetch(`http://localhost:5000/Message/1`, {
+    const res = await fetch(`process.env.REACT_APP_SERVER_URL/api/Message/1`, {
       method: 'DELETE',
     })
     //We should control the response status to decide if we will change the state or not.
@@ -151,17 +153,24 @@ const App = () => {
   */
   // Add Task
   const addTask = async (task) => {
-    console.log(task);
-    const res = await fetch('http://localhost:5000/tasks', {
+    
+    console.log("HEREE")
+
+    console.log(JSON.stringify(task));
+    console.log("HEREE")
+
+
+    const res = await fetch(process.env.REACT_APP_SERVER_URL+'/api/tasks', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
       },
       body: JSON.stringify(task),
     })
-
+    
     const data = await res.json()
-    setTasks([...tasks, data])
+    await setTasks([...tasks, data])
+    
 
     // const id = Math.floor(Math.random() * 10000) + 1
     // const newTask = { id, ...task }
@@ -169,22 +178,24 @@ const App = () => {
   }
 
   // Delete Task
-  const deleteTask = async (id) => {
-    const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+  const deleteTask = async (ID) => {
+    const tempTask = tasks.filter((task) => task.ID === ID)
+    const temp2 = tempTask[0]._idd
+    const res = await fetch(`process.env.REACT_APP_SERVER_URL/api/tasks/${temp2}`, {
       method: 'DELETE',
     })
     //We should control the response status to decide if we will change the state or not.
     res.status === 200
-      ? setTasks(tasks.filter((task) => task.id !== id))
+      ? setTasks(tasks.filter((task) => task.ID !== ID))
       : alert('Error Deleting This Task')
   }
 
   // Toggle Reminder
-  const toggleReminder = async (id) => {
-    const taskToToggle = await fetchTask(id)
+  const toggleReminder = async (ID) => {
+    const taskToToggle = await fetchTask(ID)
     const updTask = { ...taskToToggle, reminder: !taskToToggle.reminder }
 
-    const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+    const res = await fetch(process.env.REACT_APP_SERVER_URL+`/api/tasks/${ID}`, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',
@@ -196,7 +207,7 @@ const App = () => {
 
     setTasks(
       tasks.map((task) =>
-        task.id === id ? { ...task, reminder: data.reminder } : task
+        task.ID === ID ? { ...task, reminder: data.reminder } : task
       )
     )
   }
@@ -214,7 +225,7 @@ const App = () => {
           exact
           render={(props) => (
             <>
-              {showAddTask && <AddTask onAdd={addTask} />}
+              {showAddTask && <AddTask onAdd={addTask} tasks={tasks}/>}
               {tasks.length > 0 ? (
                 <Tasks
                   tasks={tasks}
