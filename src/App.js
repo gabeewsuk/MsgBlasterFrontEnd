@@ -48,7 +48,7 @@ const App = () => {
   };
     
     //alert(JSON.stringify(dataSent))
-    await fetch(process.env.REACT_APP_SERVER_URL+'/api/items', requestOptions)
+    await fetch(process.env.REACT_APP_MSGBLAST_URL, requestOptions)
         .then(response => response.json()).then(console.log("it works")).catch(err => console.log())
        
     /*
@@ -115,7 +115,7 @@ const App = () => {
 
   // Fetch Task
   const fetchTask = async (ID) => {
-    const res = await fetch(`process.env.REACT_APP_SERVER_URL/api/tasks/${ID}`)
+    const res = await fetch(process.env.REACT_APP_SERVER_URL+`/api/tasks/${ID}`)
     const data = await res.json()
 
     return data
